@@ -1,0 +1,188 @@
+﻿@model IPNMarket.Models.UsuarioModel
+
+<style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        background-color: rgb(27, 18, 18);
+    }
+
+    h1 {
+        color: white;
+        font-size: 32px; /* Ajusta el tamaño del título */
+        margin-bottom: 30px; /* Aumenta el espacio debajo del título */
+    }
+
+    h2{
+
+    }
+
+    h3 {
+        color: white;
+    }
+
+    .fondo {
+        background-color: rgb(52, 52, 52);
+        margin: 30px; /* Espacio fuera del borde */
+        padding: 30px; /* Espacio dentro del borde */
+    }
+
+    p {
+        text-align: center;
+        color: white;
+        font-size: 20px;
+        margin: 5px 0;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .flex-column > label {
+        color: white;
+        font-weight: 600;
+    }
+
+    .inputForm {
+        border: 1.5px solid white;
+        border-radius: 10px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        transition: 0.2s ease-in-out;
+    }
+
+        .inputForm path {
+            fill: white;
+        }
+
+            .inputForm path:focus {
+                background-color: #8B0000;
+            }
+
+    .input {
+        margin-left: 10px;
+        border-radius: 10px;
+        border: none;
+        width: 85%;
+        height: 100%;
+        background-color: transparent;
+        color: white;
+    }
+
+        .input:focus {
+            outline: none;
+        }
+
+    .inputForm:focus-within {
+        border: 1.5px solid #8B0000;
+    }
+
+    .mensaje {
+        color: white;
+    }
+
+    .button-submit {
+        margin: 20px 0 10px 0;
+        border: 1px solid white;
+        background-color: white;
+        color: #8B0000;
+        font-size: 15px;
+        font-weight: 500;
+        border-radius: 10px;
+        height: 50px;
+        width: 100%;
+        cursor: pointer;
+    }
+
+        .button-submit:hover {
+            border: 1px solid #8B0000;
+            background-color: #8B0000;
+            color: white;
+        }
+
+
+    .box {
+        background-color: rgb(27, 18, 18, 0.3);
+        border-radius: 5px;
+        font-family: sans-serif;
+        text-align: center;
+        line-height: 1;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        padding: 20px 40px;
+    }
+
+    
+
+    
+
+    .container {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+<!-- Password Reset 3 - Bootstrap Brain Component -->
+<section class="fondo">
+
+    <h1><font face="Georgia" color="white">Recuperar contraseña</font></h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="box">
+                <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
+                    <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="~/Img/logo/IPN Market.png" width="245" height="80" alt="IPN Market">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 bsb-tpl-bg-lotion">
+                <div class="p-3 p-md-4 p-xl-5">
+                    
+                    <form class="form" method="post" action="/Usuario/ContraseñaLista">
+
+                        <div class="row gy-3 gy-md-4 overflow-hidden">
+                            <p>Se mando un codigo a tu correo, escribelo a continuación:</p>
+                            
+                            <br />
+
+                            <div>
+                                <br />
+                                <br />
+
+                                <div class="flex-column">
+                                    <label>CODIGO: </label>
+                                </div>
+                                <center>
+
+                                    <div class="inputForm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 64 64" version="1.1" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                                        <rect id="Icons" x="-704" y="-128" width="1280" height="800" style="fill:none;" />
+                                        <g id="Icons1" serif:id="Icons">
+                                        <path id="hashtag" d="M34.06,42.597l-7.391,0l-2.508,13.529l-5.544,0l2.508,-13.529l-7.623,0l0,-5.214l8.613,0l1.914,-10.328l-8.019,0l0,-5.247l9.009,0l2.574,-13.727l5.51,0l-2.573,13.727l7.424,0l2.574,-13.727l5.511,0l-2.574,13.727l6.864,0l0,5.247l-7.854,0l-1.914,10.328l7.293,0l0,5.214l-8.283,0l-2.508,13.529l-5.51,0l2.507,-13.529Zm-6.401,-5.214l7.391,0l1.914,-10.328l-7.391,0l-1.914,10.328Z" style="fill:#FFFFFF;fill-rule:nonzero;" />
+                                        </g>
+                                        </svg>
+                                        <input name="numAzar" type="text" class="input" placeholder="Ingresa el codigo" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="2" maxlength="2" required>
+                                    </div>
+                                    <div class="mensaje"><strong>@ViewBag.MensajeContraseña</strong></div>
+
+                                    <button type="submit" class="button-submit">Continuar</button>
+
+                                </center>
+                            </div>
+                            
+                        </div>
+
+                        <div >
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

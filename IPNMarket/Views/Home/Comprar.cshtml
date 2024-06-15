@@ -1,0 +1,148 @@
+﻿@model List<IPNMarket.Models.CarritoModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket de Compra</title>
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+            font-family: Arial, sans-serif;
+        }
+
+        .ticket-container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #8B0000;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f3f3f3;
+            color: #8B0000;
+            text-align: center;
+        }
+
+        td {
+            background-color: #f3f3f3;
+            color: #333;
+        }
+
+            td img {
+                border-radius: 5px;
+                max-width: 50px;
+            }
+
+        .total-row {
+            background-color: #f3f3f3;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .total-container {
+            text-align: right;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border-radius: 8px;
+        }
+
+            .total-container p {
+                margin: 5px 0;
+                font-size: 18px;
+                color: #8B0000;
+            }
+
+                .total-container p span {
+                    font-weight: bold;
+                }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #8B0000;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #a30000;
+            }
+
+        .empty-cart {
+            text-align: center;
+            color: #8B0000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <h2>Ticket de Compra</h2>
+
+        @if (Model.Count > 0)
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Descripción</td>
+                            <td>@item.Cantidad</td>
+                            <td>@item.Precio.ToString("C")</td>
+                            <td>@item.Sub_Total.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="total-container">
+                <p>Subtotal: <span>@(Model.Sum(item => item.Sub_Total).ToString("C"))</span></p>
+                <p>IVA (16%): <span>@((Model.Sum(item => item.Sub_Total) * 0.16).ToString("C"))</span></p>
+                <p>Total: <span>@((Model.Sum(item => item.Sub_Total) * 1.16).ToString("C"))</span></p>
+            </div>
+
+            <a href="/Home/Home" class="btn">Regresar</a>
+            <a href="/Home/GeneratePdf" class="btn">PDF</a>
+        }
+        else
+        {
+            <p class="empty-cart">No hay elementos en el carrito.</p>
+            <a href="/GeneratePdf/Home" class="btn">Regresar</a>
+        }
+    </div>
+</body>
+</html>

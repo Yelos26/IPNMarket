@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewData["Title"] = "PERFIL DE ADMIN";
+}
+
+<h1><font face="Algerian Normal" color="white">PERFIL DE ADMIN</font></h1>
+<style>
+    .main-body {
+        /* background-color: rgba(255, 255, 255, 0.3); */
+        background: #fff;
+        background: rgba(255,255,255,0.1);
+        /* opacity: 0.7; */
+        border-radius: 5px;
+        font-family: sans-serif;
+        text-align: center;
+        line-height: 1;
+        border-top: 1px solid rgba(255,255,255,.5);
+        /* -webkit-backdrop-filter: blur(15px); */
+        backdrop-filter: blur(15px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        /* max-width: 50%;
+                        max-height: 50%;*/
+        padding: 20px 40px;
+    }
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        background: -webkit-linear-gradient(90deg, #000000,#383838,#3c3939);
+        background: linear-gradient(90deg, #000000,#383838,#3c3939);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .container {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+<div class="container">
+    <div class="main-body">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Home">Regresar al inicio</a></li>
+            </ol>
+        </nav>
+        <!-- /Información del usuario -->
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (ViewBag.n == "0")
+                            {
+                                <img src="@ViewBag.Imagen" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            else
+                            {
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            <div class="mt-3">
+                                <h4>@ViewData["Nombree"] </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card mt-3">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nombre</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @ViewData["Nombree"] @ViewData["ApPat"] @ViewData["ApMat"]
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Correo</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @ViewData["Correo"]
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Dirección</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @ViewData["dirección"]
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-info" asp-controller="Usuario" asp-action="EditarPerfilUsuario">Editar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="container-fluid h-custom">
+                PRODUCTOS
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />

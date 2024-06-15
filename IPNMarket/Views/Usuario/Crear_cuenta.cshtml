@@ -1,0 +1,257 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPNMarket - Tu tienda virtual</title>
+    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="~/css/CrearCuentaV3.css"/> 
+
+    <style>
+
+        body {
+            background-color: rgb(27, 18, 18);
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px; /* Ajusta el tamaño del título */
+            margin-bottom: 30px; /* Aumenta el espacio debajo del título */
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Aumenta el espacio entre los elementos del formulario */
+            background-color: rgb(52, 52, 52, 0.95);
+            padding: 30px;
+            width: 100%; /* Haz que el formulario ocupe todo el ancho disponible */
+            max-width: 500px; /* Establece un ancho máximo para el formulario */
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave al formulario */
+            margin: auto; /* Centra el formulario horizontalmente en la página */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        ::placeholder {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .form button {
+            align-self: flex-end;
+        }
+
+        .flex-column > label {
+            color: white;
+            font-weight: 600;
+        }
+
+        .inputForm {
+            border: 1.5px solid white;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            transition: 0.2s ease-in-out;
+        }
+
+            .inputForm path {
+                fill: white;
+            }
+
+                .inputForm path:focus {
+                    background-color: #8B0000;
+                }
+
+        .input {
+            margin-left: 10px;
+            border-radius: 10px;
+            border: none;
+            width: 85%;
+            height: 100%;
+            background-color: transparent;
+            color: white;
+        }
+
+            .input:focus {
+                outline: none;
+            }
+
+        .inputForm:focus-within {
+            border: 1.5px solid #8B0000;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+
+        .span {
+            font-size: 14px;
+            margin-left: 5px;
+            color: #8B0000;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .button-submit {
+            margin: 20px 0 10px 0;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .button-submit:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .p {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .mensaje {
+            color: white;
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 10px; /* Distancia desde la parte superior */
+            right: 10px; /* Distancia desde la parte derecha */
+            z-index: 9999; /* Asegura que el contenedor esté por encima de otros elementos */
+            background-color: rgb(52, 52, 52);
+            border: 1px solid #8B0000;
+            border-radius: 10px;
+        }
+
+        /* Estilo para la imagen */
+        .logo-img {
+            width: 100px; /* Tamaño de la imagen, ajusta según sea necesario */
+            height: auto; /* Permite que la altura se ajuste automáticamente */
+        }
+    </style>
+</head>
+
+<body>
+
+     <ul class="circles">
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="white"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="red"></li>
+    </ul> 
+
+    <form class="form" method="post" action="/Usuario/V_CrearCuenta">
+
+        <h1> CREAR CUENTA </h1>
+
+        <!-- Correo -->
+        <div class="flex-column">
+            <label>CORREO:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg"><g id="Layer_3" data-name="Layer 3"><path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path></g></svg>
+                <input name="email" type="text" class="input" placeholder="Ingresa tu Correo" onkeypress="return (event.charCode >= 33 && event.charCode <= 126)" minlength="5" maxlength="50" value="@ViewBag.Correo" required>
+            </div>
+            <div class="mensaje"><strong>@ViewBag.MensajeCorreo</strong></div>
+        </center>
+
+        <!-- Contraseña -->
+        <div class="flex-column">
+            <label>CONTRASEÑA:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path><path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path></svg>
+                <input name="contraseña" type="password" class="input" placeholder="Ingresa tu Contraseña" onkeypress="return (event.charCode >= 33 && event.charCode <= 47) || (event.charCode >= 58 && event.charCode <= 64) || (event.charCode >= 91 && event.charCode <= 96) || (event.charCode >= 123 && event.charCode <= 126) || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" minlength="8" maxlength="25" required>
+            </div>
+            <div class="mensaje"><strong>@ViewBag.MensajeContraseña</strong></div>
+        </center>
+
+        <!-- Verificar contraseña -->
+        <div class="flex-column">
+            <label>VERIFICAR CONTRASEÑA:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path><path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path></svg>
+                <input name="V_contraseña" type="password" class="input" placeholder="Ingresa nuevamente tu Contraseña" onkeypress="return (event.charCode >= 33 && event.charCode <= 47) || (event.charCode >= 58 && event.charCode <= 64) || (event.charCode >= 91 && event.charCode <= 96) || (event.charCode >= 123 && event.charCode <= 126) || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" minlength="8" maxlength="25" required>
+            </div>
+            <div class="mensaje"><strong>@ViewBag.MensajeContraseña2</strong></div>
+        </center>
+
+        <div class="flex-row">
+            <button id="enviar" class="btn btn-primary" type="submit" onclick="regresar()">REGRESAR</button>
+            <button type="submit" class="btn btn-primary">SIGUIENTE</button>
+        </div>
+
+    </form>
+
+    <div class="logo-container">
+        <img src="~/Img/logo/IPN Market.png" class="logo-img" alt="IPN Market Logo">
+    </div>
+    
+    <script>
+        function regresar() {
+            if (confirm("¿REGRESAR?")) {
+                window.location.href = "/Usuario/Iniciar_Sesion";
+            }
+        }
+    </script>
+</body>
+
+</html>

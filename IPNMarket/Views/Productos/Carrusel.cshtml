@@ -1,0 +1,191 @@
+﻿@model List<IPNMarket.Models.CarruselModel>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(27, 18, 18);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            background-color: rgb(52, 52, 52, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid white;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        td{
+            color: white;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            height: 60px; /* Fijar la altura a 60px */
+            width: auto; /* Ancho automático */
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <center><h1>IMAGENES DEL CARRUSEL</h1></center>
+        
+        <div class="flex-row">
+            <button class="btn btn-secondary" onclick="location.href='@Url.Action("Home", "Home")'">Regresar</button>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("AgregarIMGCarrusel", "Productos")'">Agregar</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Controlador</th>
+                    <th>Acción</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var carru in Model)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                string imageData = "";
+                                if (carru.Imagen != null && carru.Imagen.Length > 0)
+                                {
+                                    string base64 = Convert.ToBase64String(carru.Imagen);
+                                    string extension = "jpg"; // Extensión predeterminada
+                                    if (carru.Imagen.Take(4).SequenceEqual(new byte[] { 137, 80, 78, 71 }))
+                                    {
+                                        extension = "png";
+                                    }
+                                    else if (carru.Imagen.Take(2).SequenceEqual(new byte[] { 255, 216 }))
+                                    {
+                                        extension = "jpeg";
+                                    }
+                                    imageData = $"data:image/{extension};base64,{base64}";
+                                }
+                            }
+                            @if (!string.IsNullOrEmpty(imageData))
+                            {
+                                <img src="@imageData" alt="@carru.ID_Carrusel">
+                            }
+                            else
+                            {
+                                <span>No disponible</span>
+                            }
+                        </td>
+                        <td>@carru.Controlador</td>
+                        <td>@carru.Accion</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="editarIMGCarrusel('@carru.ID_Carrusel')">Editar</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" onclick="Eliminar('@carru.ID_Carrusel')">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editarIMGCarrusel(idProducto) {
+            window.location.href = '@Url.Action("EditarIMGCarrusel", "Productos")?id=' + idProducto;
+        }
+
+        function Eliminar(idProducto) {
+            if (confirm("¿Seguro que desea eliminar este Imagen del carrusel?")) {
+                if (confirm("¿Seguro?")) {
+                    window.location.href = '@Url.Action("EliminarIMGCarrusel", "Productos")?id=' + idProducto;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
+

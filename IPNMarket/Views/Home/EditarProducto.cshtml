@@ -1,0 +1,367 @@
+﻿@model ProductosModel
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalles del Producto</title>
+
+<style>
+    html,
+    body {
+        height: 500px;
+        width: 100%;
+    }
+
+    body {
+        background-color: rgb(27, 18, 18);
+    }
+
+    .container {
+        
+        max-width: 700px;
+        box-sizing: border-box;
+        justify-content: center; /* Asegúrate de añadir esto */
+        align-items: center; /* Para centrar verticalmente si es necesario */
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Aumenta el espacio entre los elementos del formulario */
+        background-color: transparent;
+        border-radius: 10px;
+        padding: 20px;
+        width: 100%; /* Haz que el formulario ocupe todo el ancho disponible */
+        margin: auto; /* Centra el formulario horizontalmente en la página */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .espacio {
+        width: 700px;
+        margin: auto;
+        background-color: rgb(52, 52, 52, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave al formulario */
+        padding: 20px; 
+        box-sizing: border-box; 
+        justify-content: center;
+    }
+
+    .espacio2 {
+        width: 500px;
+        margin: auto;
+        background-color: rgb(52, 52, 52, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave al formulario */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .flex-container {
+        display: flex;
+    }
+
+    .flex-item-left {
+        padding-left: 20px;
+        flex: 0 0 100px;
+        display: flex;
+        align-items: center; /* Centrar verticalmente */
+        justify-content: center; /* Centrar horizontalmente */
+    }
+
+        .flex-item-left img {
+            width: 200px;
+            height: auto;
+            border-radius: 20px;
+        }
+
+    .flex-item-right {
+        flex: 1;
+        padding-left: 60px;
+    }
+
+    h2 {
+        color: white;
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        color: white;
+    }
+
+    .product-details {
+        margin-top: 20px;
+    }
+
+        .product-details p {
+            margin: 10px 0;
+            color: white;
+        }
+
+        .product-details label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        .product-details select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+    .agregar-carrito {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+    }
+
+        .agregar-carrito:hover {
+            background-color: #0056b3;
+        }
+
+    .flex-column > label {
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn {
+        margin-top: 10px;
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        gap: 10px;
+        border: 1px solid white;
+        background-color: white;
+        color: #8B0000;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+    }
+
+        .btn:hover {
+            border: 1px solid #8B0000;
+            background-color: #8B0000;
+            color: white;
+        }
+
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+        .flex-row > div > label {
+            font-size: 14px;
+            color: black;
+            font-weight: 400;
+        }
+
+     .PG {
+        margin: 10px 0;
+        color: #8B0000;
+     }
+</style>
+
+<section>
+    
+    <div class="container">
+        <div class="espacio">
+
+            <center><h2>DETALLES DEL PRODUCTO</h2></center>
+            <div style="margin-bottom: 10px; border-bottom: 1px solid white;"></div>
+
+            <div class="flex-container">
+                <div class="flex-item-left">
+                    @if (Model.Imagen != null)
+                    {
+                        <img src="data:image/png;base64,@Convert.ToBase64String(Model.Imagen)" alt="Imagen del Producto">
+                    }
+                    else
+                    {
+                        <p class="PG">Imagen no disponible</p>
+                    }
+                </div>
+                <div class="flex-item-right">
+                    <div class="product-details">
+                        <h3>@Model.Nombre_Producto</h3>
+                        <p><strong>Numero clave:</strong> @Model.ID_Producto</p>
+                        <p><strong>Descripción:</strong> @Model.Descripción</p>
+                        <p><strong>Tamaño:</strong> @Model.Tamaño</p>
+                        <p><strong>Costo Unitario:</strong> @Model.Costo_Unitario.ToString("C")</p>
+                        <p><strong>Sección:</strong> @ViewBag.Seccion</p>
+                        <p><strong>Escuela:</strong> @Model.Nombre</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="espacio2">
+            <div class="product-details">
+                <p><strong>Cantidad actual:</strong> @ViewBag.CantidadCarrito</p>
+
+                @{
+                    int cantidadDisponible = ViewBag.Cantidad;
+                }
+
+                <div class="flex-column">
+                    <label for="cantidad" id="cantidadLabel">Selecciona una cantidad para Aumentar o Restar a la actual:</label>
+                </div>
+                <select name="cantidad" id="cantidad_@Model.ID_Producto" onchange="checkOtherOption(this); actualizarTotales();">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                    <option value="other">Otra...</option>
+                </select>
+                <div id="otraCantidad" style="display: none; margin-top: 10px;">
+                    <div class="flex-column">
+                        <label for="otra" id="otraLabel">Otra Cantidad:</label>
+                    </div>
+                    <input type="number" id="otra" name="otra" min="1" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+                <br />
+                <p><strong>Subtotal:</strong> <span id="subtotal"></span></p>
+                <p><strong>Importe (IVA 16%):</strong> <span id="importe"></span></p>
+                <p><strong>Total:</strong> <span id="total"></span></p>
+                <br />
+                <div class="flex-row">
+                    <button class="btn btn-primary" onclick="agregar('@Model.ID_Producto', '@Model.Costo_Unitario')">Aumetar</button>
+                    <button class="btn btn-primary" onclick="quitar('@Model.ID_Producto', '@Model.Costo_Unitario')">Restar</button>
+                </div>
+
+                <br />
+
+                <div class="flex-row">
+                    <button class="btn btn-primary" onclick="salir()">Regresar</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+
+        function actualizarTotales() {
+            var selectCantidad = document.getElementById('cantidad_@Model.ID_Producto');
+            var inputOtraCantidad = document.getElementById('otra');
+            var cantidad = selectCantidad.value === 'other' ? inputOtraCantidad.value : selectCantidad.value;
+            var costoUnitario = @Model.Costo_Unitario;
+            var subtotal = cantidad * costoUnitario;
+            var importe = subtotal * 0.16;
+            var total = subtotal + importe;
+
+            document.getElementById('subtotal').innerText = subtotal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+            document.getElementById('importe').innerText = importe.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+            document.getElementById('total').innerText = total.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+        }
+
+        var cantidadDisponible = @cantidadDisponible;
+
+        function checkOtherOption(select) {
+            var otraCantidadDiv = document.getElementById('otraCantidad');
+            if (select.value === 'other') {
+                otraCantidadDiv.style.display = 'block';
+            } else {
+                otraCantidadDiv.style.display = 'none';
+                actualizarTotales();
+            }
+        }
+
+        function agregar(idProducto, costoUnitario) {
+            var cantidadSelect = document.getElementById('cantidad_' + idProducto);
+            var cantidad;
+            if (cantidadSelect.value === 'other') {
+                cantidad = document.getElementById('otra').value;
+            } else {
+                cantidad = cantidadSelect.value;
+            }
+
+            if (cantidad > 0) {
+                if (cantidadDisponible >= cantidad) {
+                    var confirmacion = confirm("¿Comprar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        window.parent.postMessage({ action: 'productoAgregado' }, '*');
+                        window.location.href = '@Url.Action("AgregarAlCarrito", "Home")?id=' + idProducto + '&cantidad=' + cantidad;
+                    }
+                } else {
+                    cantidad = cantidadDisponible;
+                    var confirmacion = confirm("Existencias insuficientes, ¿Comprar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        window.parent.postMessage({ action: 'productoAgregado' }, '*');
+                        window.location.href = '@Url.Action("AgregarAlCarrito", "Home")?id=' + idProducto + '&cantidad=' + cantidad;
+                    }
+                }
+            } else {
+                alert("La cantidad seleccionada debe ser mayor que 0.");
+            }
+        }
+
+        function quitar(idProducto, costoUnitario) {
+            var cantidadSelect = document.getElementById('cantidad_' + idProducto);
+            var cantidad;
+            if (cantidadSelect.value === 'other') {
+                cantidad = parseInt(document.getElementById('otra').value);
+            } else {
+                cantidad = parseInt(cantidadSelect.value);
+            }
+
+            var cantidadCarrito = parseInt(@ViewBag.CantidadCarrito);
+
+            if (cantidad > 0) {
+                if (cantidadCarrito === cantidad) {
+                    var confirmacion = confirm("¿Restar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        if (confirm("¿Seguro que desea eliminar este producto?")) {
+                            var idCarrito = parseInt(@ViewBag.ID_Carrito);
+
+                            window.location.href = '@Url.Action("EliminarProducto", "Home")?id=' + idCarrito + '&cantidad=' + cantidad;
+                        }
+                    }
+                } else if (cantidadCarrito > cantidad) {
+                    var confirmacion = confirm("¿Restar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        window.location.href = '@Url.Action("RestarAlCarrito", "Home")?id=' + idProducto + '&cantidad=' + cantidad;
+                    }
+                } else {
+                    alert("Para restar, debes elegir una cantidad menor o igual a la que ya posees.");
+                }
+            } else {
+                alert("La cantidad seleccionada debe ser mayor que 0.");
+            }
+        }
+
+        function salir() {
+            window.location.href = '/Home/Carrito';
+        }
+
+        document.addEventListener('DOMContentLoaded', actualizarTotales);
+
+        // Escuchar cambios en el campo "Otra Cantidad"
+        document.getElementById('otra').oninput = function () {
+            actualizarTotales();
+        };
+
+        // Escuchar cambios en el select de cantidad
+        document.getElementById('cantidad_@Model.ID_Producto').onchange = function () {
+            checkOtherOption(this);
+        };
+
+    </script>
+</section>

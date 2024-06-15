@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPNMarket - Tu tienda virtual</title>
+    <link rel="stylesheet" href="~/css/CrearCuentaV3.css" />
+    <link rel="stylesheet" href="styles.css">
+    
+
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px; /* Ajusta el tamaño del título */
+            margin-bottom: 30px; /* Aumenta el espacio debajo del título */
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: rgb(52, 52, 52, 0.95);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto; /* Ajusta el margen para centrar el formulario horizontalmente */
+        }
+
+        ::placeholder {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .form button {
+            align-self: flex-end;
+        }
+
+        .flex-column > label {
+            color: white;
+            font-weight: 600;
+        }
+
+        .inputForm {
+            border: 1.5px solid white;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            transition: 0.2s ease-in-out;
+        }
+
+            .inputForm path {
+                fill: white;
+            }
+
+                .inputForm path:focus {
+                    background-color: #8B0000;
+                }
+
+        .input {
+            margin-left: 10px;
+            border-radius: 10px;
+            border: none;
+            width: 85%;
+            height: 100%;
+            background-color: transparent;
+            color: white;
+        }
+
+            .input:focus {
+                outline: none;
+            }
+
+        .inputForm:focus-within {
+            border: 1.5px solid #8B0000;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+
+        .span {
+            font-size: 14px;
+            margin-left: 5px;
+            color: #8B0000;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .button-submit {
+            margin: 20px 0 10px 0;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .button-submit:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        p {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .mensaje {
+            color: white;
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 10px; /* Distancia desde la parte superior */
+            right: 10px; /* Distancia desde la parte derecha */
+            z-index: 9999; /* Asegura que el contenedor esté por encima de otros elementos */
+            background-color: rgb(52, 52, 52);
+            border: 1px solid #8B0000;
+            border-radius: 10px;
+        }
+
+        /* Estilo para la imagen */
+        .logo-img {
+            width: 100px; /* Tamaño de la imagen, ajusta según sea necesario */
+            height: auto; /* Permite que la altura se ajuste automáticamente */
+        }
+
+        .map-container {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="circles">
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="white"></li>
+        <li class="white"></li>
+        <li class="white"></li>
+        <li class="red"></li>
+        <li class="red"></li>
+    </ul>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <form class="form" method="post" action="/Usuario/ActualizarPerfilUsuario">
+
+        <h1> MODIFICAR CUENTA </h1>
+
+        <!-- Nombre -->
+        <div class="flex-column">
+            <label>NOMBRE:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                <path fill="white" d="M256,246.296c-64.182,0-116.398-52.216-116.398-116.398S191.818,13.5,256,13.5s116.398,52.216,116.398,116.398  S320.182,246.296,256,246.296z M256,38.5c-50.397,0-91.398,41.001-91.398,91.398s41.001,91.398,91.398,91.398  s91.398-41.001,91.398-91.398S306.397,38.5,256,38.5z M403.196,498.5H108.804c-31.754,0-57.588-25.834-57.588-57.588v-36.027  c0-74.966,60.989-135.955,135.955-135.955h137.657c74.966,0,135.955,60.989,135.955,135.955v36.027  C460.784,472.666,434.95,498.5,403.196,498.5z M187.171,293.93c-61.181,0-110.955,49.774-110.955,110.955v36.027  c0,17.969,14.619,32.588,32.588,32.588h294.392c17.969,0,32.588-14.619,32.588-32.588v-36.027  c0-61.181-49.774-110.955-110.955-110.955H187.171z" />
+                </svg>                    
+                <input name="nombre" type="text" class="input" placeholder="Ingresa tu Nombre" value="@ViewData["nombre"]" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 32" minlength="1" maxlength="35" required>
+            </div>
+        </center>
+        
+        <!-- Apellido Paterno -->
+        <div class="flex-column">
+            <label>APELLIDO PATERNO:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                <path fill="white" d="M256,246.296c-64.182,0-116.398-52.216-116.398-116.398S191.818,13.5,256,13.5s116.398,52.216,116.398,116.398  S320.182,246.296,256,246.296z M256,38.5c-50.397,0-91.398,41.001-91.398,91.398s41.001,91.398,91.398,91.398  s91.398-41.001,91.398-91.398S306.397,38.5,256,38.5z M403.196,498.5H108.804c-31.754,0-57.588-25.834-57.588-57.588v-36.027  c0-74.966,60.989-135.955,135.955-135.955h137.657c74.966,0,135.955,60.989,135.955,135.955v36.027  C460.784,472.666,434.95,498.5,403.196,498.5z M187.171,293.93c-61.181,0-110.955,49.774-110.955,110.955v36.027  c0,17.969,14.619,32.588,32.588,32.588h294.392c17.969,0,32.588-14.619,32.588-32.588v-36.027  c0-61.181-49.774-110.955-110.955-110.955H187.171z" />
+                </svg>                    
+                <input name="Ap_Paterno" type="text" class="input" placeholder="Ingresa tu Apellido Paterno" value="@ViewData["Ap_Paterno"]" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)  || event.charCode == 32" minlength="1" maxlength="50" required>
+            </div>
+        </center>
+        
+        <!-- Apellido Materno -->
+        <div class="flex-column">
+            <label>APELLIDO MATERNO:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                <path fill="white" d="M256,246.296c-64.182,0-116.398-52.216-116.398-116.398S191.818,13.5,256,13.5s116.398,52.216,116.398,116.398  S320.182,246.296,256,246.296z M256,38.5c-50.397,0-91.398,41.001-91.398,91.398s41.001,91.398,91.398,91.398  s91.398-41.001,91.398-91.398S306.397,38.5,256,38.5z M403.196,498.5H108.804c-31.754,0-57.588-25.834-57.588-57.588v-36.027  c0-74.966,60.989-135.955,135.955-135.955h137.657c74.966,0,135.955,60.989,135.955,135.955v36.027  C460.784,472.666,434.95,498.5,403.196,498.5z M187.171,293.93c-61.181,0-110.955,49.774-110.955,110.955v36.027  c0,17.969,14.619,32.588,32.588,32.588h294.392c17.969,0,32.588-14.619,32.588-32.588v-36.027  c0-61.181-49.774-110.955-110.955-110.955H187.171z" />
+                </svg>                    
+                <input name="Ap_Materno" type="text" class="input" placeholder="Ingresa tu Apellido Materno" value="@ViewData["Ap_Materno"]" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)  || event.charCode == 32" minlength="1" maxlength="50" required>
+            </div>
+        </center>
+        
+        <!-- Dirección -->
+        <div class="flex-column">
+            <label>DIRECCIÓN:</label>
+        </div>
+        <center>
+            <div class="inputForm">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20">
+                    <g data-name="Layer 2" id="Layer_2">
+                        <path fill="white" d="M16,29a1,1,0,0,1-.71-.29l-7.07-7a10.91,10.91,0,0,1,0-15.48,11.07,11.07,0,0,1,15.56,0,10.91,10.91,0,0,1,0,15.48l-7.07,7A1,1,0,0,1,16,29ZM16,5A9,9,0,0,0,9.63,7.62h0a8.91,8.91,0,0,0,0,12.64L16,26.59l6.37-6.33a8.91,8.91,0,0,0,0-12.64A9,9,0,0,0,16,5ZM8.93,6.91h0Z" />
+                        <path fill="white" d="M16,19a5,5,0,1,1,5-5A5,5,0,0,1,16,19Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,16,11Z" />
+                    </g>
+                    <rect fill="white" height="32" width="32" fill-opacity="0" />
+                </svg>
+                <input id="direccion" name="Dirección" type="text" class="input" placeholder="Ingresa tu Dirección" value="@ViewData["dirección"]" oninput="updateMap()" onkeypress="return (event.charCode >= 32 && event.charCode <= 126)" minlength="1" maxlength="270" required>
+            </div>
+        </center>
+
+        <!-- Contenedor del Mapa -->
+        <div class="map-container">
+            <iframe id="mapa" src="https://maps.google.com/maps?q=19.432608,-99.133209&z=15&output=embed" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>
+        </div>
+        
+        <div class="flex-row">
+            <button id="CANCELAR" type="button" class="btn btn-primary">REGRESAR</button>
+            <button id="GUARDARC" type="button" class="btn btn-primary">GUARDAR CAMBIOS</button>
+        </div>
+
+    </form>
+
+    <br />
+
+    <form class="form" method="post" action="/Usuario/ActualizarPerfilUsuario">
+        <center>
+            <div class="flex-column">
+                <label>MODIFICAR</label>
+            </div>
+        </center>
+        
+        <div class="flex-row">
+
+            @if (Convert.ToInt32(ViewData["ID_PERFIL"]) == 1)
+            {
+                <!-- Boton para Modificar el CORREO -->
+                <button type="submit" class="btn btn-primary" asp-action="ModificarCORREO" asp-controller="Usuario">CORREO</button>
+            }
+            
+            <!-- Boton para Modificar la CONTRASEÑA -->
+            <button type="submit" class="btn btn-primary" asp-action="ModificarCONTRASEÑA" asp-controller="Usuario">CONTRASEÑA</button>
+
+            <!-- Boton para Modificar la IMAGEN -->
+            <button type="submit" class="btn btn-primary" asp-action="ModificarImagen" asp-controller="Usuario">IMAGEN</button>
+        </div>
+    </form>
+
+    <br />
+
+    @if (Convert.ToInt32(ViewData["ID_PERFIL"]) == 1)
+    {
+        <form class="form" method="post" action="/Usuario/ActualizarPerfilUsuario">
+            <button id="ELIMINAR" type="button" class="btn btn-primary">ELIMINAR CUENTA</button>
+        </form>
+    }
+
+    <div class="logo-container">
+        <img src="~/Img/logo/IPN Market.png" class="logo-img" alt="IPN Market Logo">
+    </div>
+
+    <script>
+        function regresar() {
+            window.location.href = "/Usuario/Iniciar_Sesion";
+        }
+
+        function updateMap() {
+            var address = document.getElementById("direccion").value;
+            var mapFrame = document.getElementById("mapa");
+            var encodedAddress = encodeURIComponent(address);
+            var mapUrl = "https://maps.google.com/maps?q=" + encodedAddress + "&z=15&output=embed";
+            mapFrame.src = mapUrl;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateMap();
+        });
+    </script>
+
+    <script>
+        document.getElementById("GUARDARC").addEventListener("click", function () {
+            var confirmacion = confirm("¿Está seguro de que desea GUARDAR los cambios?");
+            if (confirmacion) {
+                // Capturar los valores de los campos del formulario
+                var nombre = document.getElementsByName("nombre")[0].value;
+                var apPaterno = document.getElementsByName("Ap_Paterno")[0].value;
+                var apMaterno = document.getElementsByName("Ap_Materno")[0].value;
+                var direccion = document.getElementsByName("Dirección")[0].value;
+
+                // Crear un objeto con los valores capturados
+                var data = {
+                    nombre: nombre,
+                    Ap_Paterno: apPaterno,
+                    Ap_Materno: apMaterno,
+                    Dirección: direccion
+                };
+
+                // Realizar la solicitud POST utilizando AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/Usuario/ActualizarPerfilUsuario", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    // Manejar la respuesta aquí si es necesario
+                    if (xhr.status === 200) {
+                        // Éxito
+                        console.log('Los cambios se guardaron correctamente.');
+                        window.location.href = "/Home/Home";
+                    } else {
+                        // Error
+                        console.error('Error al guardar los cambios.');
+                    }
+                };
+                // Convertir el objeto de datos a JSON y enviarlo en la solicitud
+                xhr.send(JSON.stringify(data));
+            } else {
+                // El usuario canceló, no hacer nada
+            }
+        });
+    </script>
+
+    <!-- SCRIPT del boton "CANCELAR" -->
+    <script>
+        document.getElementById("CANCELAR").addEventListener("click", function () {
+            var confirmacion = confirm("¿Regresar al INICIO?");
+            if (confirmacion) {
+                window.location.href = "/Home/Home";
+            } else {
+
+            }
+        });
+    </script>
+
+    <!-- SCRIPT del boton "ELIMINAR CUENTA" -->
+    <script>
+        document.getElementById("ELIMINAR").addEventListener("click", function () {
+            var confirmacion = confirm("¿ELIMINAR CUENTA?");
+            if (confirmacion) {
+                var confirmacion2 = confirm("DESPUES DE ESTO SE ELIMINARA PERMANENTEMENTE TU CUENTA");
+                if (confirmacion2) {
+                    // Realizar la solicitud POST para eliminar el perfil del usuario
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/Usuario/EliminarPerfilUsuario", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.onload = function () {
+                        // Manejar la respuesta aquí si es necesario
+                        if (xhr.status === 200) {
+                            // Éxito
+                            console.log('Perfil de usuario eliminado correctamente.');
+                            window.location.href = "/Home/Home";
+                        } else {
+                            // Error
+                            console.error('Error al eliminar el perfil de usuario.');
+                        }
+                    };
+                    // Enviar la solicitud POST vacía
+                    xhr.send();
+                }
+            } else {
+                // Código si el usuario cancela la eliminación
+            }
+        });
+    </script>
+
+</body>
+
+</html>

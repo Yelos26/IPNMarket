@@ -1,0 +1,354 @@
+﻿@model IEnumerable<IPNMarket.Models.ProductosModel>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPNMarket - Tu tienda virtual</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="~/css/CrearCuentaV1.css" />
+
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(52, 52, 52, 0.95);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: white;
+            font-size: 32px; 
+            margin-bottom: 30px; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate; /* Changed from collapse to separate */
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 20px; /* Rounded corners */
+            overflow: hidden; /* Ensures rounded corners apply to the table */
+            border: 20px solid #f2f2f2; /* Border with 20px */
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center; /* Center text */
+            border-bottom: 1px solid #ddd;
+            background-color: #f2f2f2;
+            color: #8B0000; /* Text color */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Area del Buscador */
+        .Buscador-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+        /* Buscador */
+        .Buscador {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+        /* Contenedor del Icono-Buscador */
+        .Buscador-icon-container {
+            background-color: #fff;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            width: 40px; /* Tamaño fijo */
+            height: 40px; /* Tamaño fijo */
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+            .Buscador-icon-container:hover,
+            .Buscador-icon-container:focus {
+                border-color: #8B0000;
+                box-shadow: 0 0 0 4px #8B0000;
+            }
+        /* Icono-Buscador */
+        .Buscador-icon {
+            fill: #000;
+            width: 1.5rem; /* Tamaño del ícono */
+            height: 1.5rem; /* Tamaño del ícono */
+        }
+        /* Area para Buscar */
+        .Buscador-input {
+            flex-grow: 1; /* El campo de búsqueda ocupa todo el espacio restante */
+            min-width: 400px; /* Ancho mínimo del campo de búsqueda */
+            height: 40px;
+            line-height: 28px;
+            padding: 0 1rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            outline: none;
+            background-color: #fff;
+            color: #8B0000;
+            transition: 0.3s ease;
+        }
+            /* Placeholder color */
+            .Buscador-input::placeholder {
+                color: #8B0000;
+            }
+            /* Focus and hover states */
+            .Buscador-input:focus,
+            .Buscador-input:hover {
+                outline: none;
+                border-color: rgba(234, 226, 183, 0.4);
+                background-color: #fff;
+                box-shadow: 0 0 0 4px rgb(234 226 183 / 10%);
+            }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+        <h2>PRODUCTOS</h2>
+
+        <div class="flex-row">
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Home", "Home")'">Regresar</button>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("AgregarProducto", "Productos")'">Agregar Producto</button>
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="container">
+        <div class="Buscador-container">
+            <div class="Buscador">
+                <input class="Buscador-input" type="search" placeholder="Buscar..." id="buscador-input" onkeyup="buscar(event)" />
+            </div>
+        </div>
+
+        <br />
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Tamaño</th>
+                    <th>Costo</th>
+                    <th>Nombre</th>
+                    <th>Fecha Salida</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var producto in Model)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                string imageData = "";
+                                if (producto.Imagen != null && producto.Imagen.Length > 0)
+                                {
+                                    string base64 = Convert.ToBase64String(producto.Imagen);
+                                    string extension = "jpg"; // Default extension
+
+                                    // Determine the image extension
+                                    if (producto.Imagen.Take(4).SequenceEqual(new byte[] { 137, 80, 78, 71 }))
+                                    {
+                                        extension = "png";
+                                    }
+                                    else if (producto.Imagen.Take(2).SequenceEqual(new byte[] { 255, 216 }))
+                                    {
+                                        extension = "jpeg";
+                                    }
+
+                                    // Create the data URI scheme
+                                    imageData = $"data:image/{extension};base64,{base64}";
+                                }
+                            }
+                            @if (!string.IsNullOrEmpty(imageData))
+                            {
+                                <img src="@imageData" alt="@producto.Nombre_Producto" width="60" height="60">
+                            }
+                            else
+                            {
+                                <span>No disponible</span>
+                            }
+                        </td>
+                        <td>@producto.Nombre_Producto</td>
+                        <td>@producto.Descripción</td>
+                        <td>@producto.Tamaño</td>
+                        <td>@producto.Costo_Unitario</td>
+                        <td>@producto.Nombre</td>
+                        <td>@producto.Fecha_Cad.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="editarProducto('@producto.ID_Producto')">Editar</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-secondary" onclick="confirmarEliminacion('@producto.ID_Producto')">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editarProducto(idProducto) {
+            window.location.href = '@Url.Action("EditarProducto", "Productos")?id=' + idProducto;
+        }
+
+        function confirmarEliminacion(idProducto) {
+            if (confirm("¿Seguro que desea eliminar este producto?")) {
+                if (confirm("¿Seguro?")) {
+                    window.location.href = '@Url.Action("EliminarProducto", "Productos")?id=' + idProducto;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const buscadorInput = document.querySelector('.Buscador-input');
+
+            buscadorInput.addEventListener('keyup', function (event) {
+                const searchTerm = event.target.value.trim().toLowerCase();
+                const rows = document.querySelectorAll('table tbody tr'); // Selección corregida
+
+                rows.forEach(row => {
+                    let rowVisible = false;
+                    row.querySelectorAll('td:not(.action-cell)').forEach(cell => { // Selección corregida
+                        const cellText = cell.innerText.trim().toLowerCase();
+                        if (cellText.includes(searchTerm)) {
+                            rowVisible = true;
+                        }
+                    });
+
+                    if (rowVisible) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

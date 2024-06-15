@@ -1,0 +1,282 @@
+﻿@model IPNMarket.Models.ProductosModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPNMarket - Tu tienda virtual</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Aumenta el espacio entre los elementos del formulario */
+            background-color: rgb(52, 52, 52, 0.95);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px; 
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        h2 {
+            color: white;
+            font-size: 32px; /* Ajusta el tamaño del título */
+            margin-bottom: 30px; /* Aumenta el espacio debajo del título */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+
+        label {
+            color: white;
+        }
+
+        .contenedorIMG img {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .button-submit {
+            margin: 20px 0 10px 0;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .button-submit:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+
+        @using (Html.BeginForm("AgregarProducto", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                <h2>Nuevo Producto</h2>
+            </div>
+
+            <div>
+                <center>
+                    <!-- Aquí mostraremos la imagen seleccionada -->
+                    <div class="contenedorIMG">
+                        @if (ViewBag.n == "0")
+                        {
+                            <img name="IMGusu" id="imagenPerfil" src="@ViewBag.Imagen" alt="Imagen de Perfil">
+                        }
+                        else
+                        {
+                            <img name="IMGusu" id="imagenPerfil" src="" alt="Imagen de Perfil">
+                        }
+                    </div>
+                </center>
+
+                <!-- Botón que se muestra visualmente -->
+                <button for="archivoInput" class="button-submit" id="botonExplorar">
+                    Explorar
+                </button>
+                <input type="file" id="archivoInput" class="explorar-btn" name="archivoInput" style="display: none;" onchange="mostrarImagen(this)" />
+            </div>
+
+            <div>
+                <label>Nombre:</label>
+                <input type="text" name="Nombre_Producto" value="@Model.Nombre_Producto" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32" minlength="1" maxlength="50" required />
+            </div>
+            <div>
+                <label>Descripción:</label>
+                <input type="text" name="Descripción" value="@Model.Descripción" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32" minlength="1" maxlength="200" required />
+            </div>
+            <div>
+                <label>Tamaño:</label>
+                <input type="text" name="Tamaño" placeholder="#x#cm, G, M, CH" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="50" required />
+            </div>
+            <div>
+                <label>Costo:</label>
+                <input type="text" name="Costo_Unitario" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="5" required />
+            </div>
+            <div>
+                <label>Cantidad:</label>
+                <input type="text" name="cantidad" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="10" required />
+            </div>
+            <div>
+                <label for="fecha_caducidad">Fecha de Caducidad/Salida:</label>
+                <input type="date" id="Fecha_Cad" name="Fecha_Cad" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+            </div>
+            <div>
+                <label for="secciones">Sección:</label>
+                <select id="secciones" name="ID_Secciones" required>
+                    <option value="4">Otros...</option>
+                    <option value="1">Academica</option>
+                    <option value="2">Salud</option>
+                    <option value="3">Deportes</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="escuelas">Escuela:</label>
+                <select id="escuelas" name="ID_Escuela" required>
+                    @for (int i = 0; i < ViewBag.ID_Escuelas.Count; i++)
+                    {
+                        <option value="@ViewBag.ID_Escuelas[i]">@ViewBag.NombresEscuelas[i]</option>
+                    }
+                </select>
+            </div>
+
+            <div class="flex-row">
+                <button type="submit" class="btn btn-primary" asp-action="Productos" asp-controller="Productos" formnovalidate>REGRESAR</button>
+                <button class="btn btn-primary" type="button" id="guardarBtn">GUARDAR</button>
+            </div>
+            <div id="mensaje" style="color: white"></div>
+        }
+    </div>
+
+    <script>
+        document.getElementById('guardarBtn').addEventListener('click', function () {
+            var fechaCaducidad = new Date(document.getElementById('Fecha_Cad').value);
+            var fechaHoy = new Date();
+
+            // Establecer la hora de fechaHoy a las 00:00:00 para comparar solo las fechas
+            fechaHoy.setHours(0, 0, 0, 0);
+
+            if (fechaCaducidad <= fechaHoy) {
+                // La fecha de caducidad es igual o anterior a la de hoy
+                document.getElementById('mensaje').innerHTML = "El producto no puede caducar el mismo día que se ingresa o antes de hoy";
+            } else {
+                // La fecha de caducidad es posterior a la de hoy
+                var confirmacion = confirm("¿Guardar producto?");
+                if (confirmacion) {
+                    // Si el usuario confirma, se envía el formulario
+                    document.querySelector('form').submit();
+                }
+            }
+        });
+    </script>
+    
+    <script>
+        document.getElementById('botonExplorar').addEventListener('click', function (event) {
+            var input = document.getElementById('archivoInput');
+            if (document.getElementById('imagenPerfil').src !== "~/Img/logo/logo_EasyMarket.png") {
+                input.click();
+            }
+            event.preventDefault(); // Evita la acción por defecto del evento click en el label
+        });
+
+        function mostrarImagen(input) {
+            if (input.files && input.files[0]) {
+                var extension = input.files[0].name.split('.').pop().toLowerCase();
+                var permitidas = ['jpg', 'jpeg', 'png'];
+
+                if (permitidas.indexOf(extension) > -1) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById('imagenPerfil').src = e.target.result;
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    alert("Por favor, selecciona un archivo de imagen válido (jpg, jpeg, png).");
+                    input.value = '';
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

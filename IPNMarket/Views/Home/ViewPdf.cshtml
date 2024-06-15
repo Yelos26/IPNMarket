@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket de Compra</title>
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+            font-family: Arial, sans-serif;
+        }
+
+        .ticket-container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #8B0000;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f3f3f3;
+            color: #8B0000;
+            text-align: center;
+        }
+
+        td {
+            background-color: #f3f3f3;
+            color: #333;
+        }
+
+            td img {
+                border-radius: 5px;
+                max-width: 50px;
+            }
+
+        .total-row {
+            background-color: #f3f3f3;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .total-container {
+            text-align: right;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border-radius: 8px;
+        }
+
+            .total-container p {
+                margin: 5px 0;
+                font-size: 18px;
+                color: #8B0000;
+            }
+
+                .total-container p span {
+                    font-weight: bold;
+                }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #8B0000;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #a30000;
+            }
+
+        .empty-cart {
+            text-align: center;
+            color: #8B0000;
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <iframe src="~/Content/@ViewBag.FileName" width="100%" height="800px"></iframe>
+
+        <p><strong> Podra encontrar este documento en su correo </strong></p>
+
+        <div class="flex-row">
+            <a href="/Home/Home" class="btn btn-primary">REGRESAR A INICIO</a>
+        </div>
+        
+    </div>
+</body>
+</html>

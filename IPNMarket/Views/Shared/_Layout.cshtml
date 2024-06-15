@@ -1,0 +1,99 @@
+﻿@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IPNMarket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html> *@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - IPNMarket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/Loader.css" />
+    <script src="~/js/Loader.js" defer></script>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <main>
+
+            <audio id="audio" src="IPNMarket_MP3.mp3"></audio>
+
+            <svg height="128px" width="128px" viewBox="0 0 128 128" class="pl1">
+                <defs>
+                    <linearGradient y2="1" x2="1" y1="0" x1="0" id="pl-grad">
+                        <stop stop-color="#000" offset="0%"></stop>
+                        <stop stop-color="#fff" offset="100%"></stop>
+                    </linearGradient>
+                    <mask id="pl-mask">
+                        <rect fill="url(#pl-grad)" height="128" width="128" y="0" x="0"></rect>
+                    </mask>
+                </defs>
+                <g fill="var(--primary)">
+                    <g class="pl1__g">
+                        <g transform="translate(20,20) rotate(0,44,44)">
+                            <g class="pl1__rect-g">
+                                <rect height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                                <rect transform="translate(0,48)" height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                            </g>
+                            <g transform="rotate(180,44,44)" class="pl1__rect-g">
+                                <rect height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                                <rect transform="translate(0,48)" height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g mask="url(#pl-mask)" fill="hsl(343,90%,50%)">
+                    <g class="pl1__g">
+                        <g transform="translate(20,20) rotate(0,44,44)">
+                            <g class="pl1__rect-g">
+                                <rect height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                                <rect transform="translate(0,48)" height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                            </g>
+                            <g transform="rotate(180,44,44)" class="pl1__rect-g">
+                                <rect height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                                <rect transform="translate(0,48)" height="40" width="40" ry="8" rx="8" class="pl1__rect"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </main>
+    </div>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <script src="~/js/site.js" defer></script>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

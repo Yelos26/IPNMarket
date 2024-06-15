@@ -1,0 +1,228 @@
+﻿@model ProductosModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-details {
+            margin-top: 20px;
+        }
+
+            .product-details img {
+                display: block;
+                margin: 0 auto;
+                max-width: 100%;
+                max-height: 300px;
+                border-radius: 10px;
+            }
+
+            .product-details p {
+                margin: 10px 0;
+                color: #666;
+            }
+
+            .product-details label {
+                display: block;
+                margin: 10px 0 5px;
+                font-weight: bold;
+            }
+
+            .product-details select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+        .agregar-carrito {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .agregar-carrito:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+@{
+    int cantidadDisponible = ViewBag.Cantidad;
+}
+
+<body>
+    <div class="container">
+        <h2>Detalles del Producto</h2>
+        <div class="product-details">
+            <h3>@Model.Nombre_Producto</h3>
+            <p><strong>Numero clave:</strong> @Model.ID_Producto</p>
+            <p><strong>Descripción:</strong> @Model.Descripción</p>
+            <p><strong>Tamaño:</strong> @Model.Tamaño</p>
+            <p><strong>Costo Unitario:</strong> @Model.Costo_Unitario.ToString("C")</p>
+            <p><strong>Sección:</strong> @ViewBag.Seccion</p>
+            <p><strong>Escuela:</strong> @Model.Nombre</p>
+            @* <p><strong>Fecha de Registro:</strong> @Model.Fecha_Reg.ToString("dd/MM/yyyy")</p> *@
+            @if (Model.Imagen != null)
+            {
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.Imagen)" alt="Imagen del Producto">
+            }
+            else
+            {
+                <p>Imagen no disponible</p>
+            }
+
+            @if (cantidadDisponible > 0 && Convert.ToString(ViewData["ID_PERFIL"]) == "1")
+            {
+                <label for="cantidad" id="cantidadLabel">Cantidad:</label>
+                <select name="cantidad" id="cantidad_@Model.ID_Producto" onchange="checkOtherOption(this); actualizarTotales();">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                    <option value="other">Otra...</option>
+                </select>
+
+                <div id="otraCantidad" style="display: none; margin-top: 10px;">
+                    <label for="otra" id="otraLabel">Otra Cantidad:</label>
+                    <input type="number" id="otra" name="otra" min="1" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+
+                <br />
+
+                <p><strong>Subtotal:</strong> <span id="subtotal"></span></p>
+                <p><strong>Importe (IVA 16%):</strong> <span id="importe"></span></p>
+                <p><strong>Total:</strong> <span id="total"></span></p>
+
+                <br />
+
+                <button class="agregar-carrito" onclick="agregar('@Model.ID_Producto', '@Model.Costo_Unitario')">Agregar al Carrito</button>
+                
+            }
+            else
+            {
+                @if (Convert.ToString(ViewData["ID_PERFIL"]) == "1")
+                {
+                    <p>Sin existencias</p>
+                }
+            }
+
+            <br />
+
+            <button class="agregar-carrito" onclick="salir()">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+
+        function actualizarTotales() {
+            var selectCantidad = document.getElementById('cantidad_@Model.ID_Producto');
+            var inputOtraCantidad = document.getElementById('otra');
+            var cantidad = selectCantidad.value === 'other' ? inputOtraCantidad.value : selectCantidad.value;
+            var costoUnitario = @Model.Costo_Unitario;
+            var subtotal = cantidad * costoUnitario;
+            var importe = subtotal * 0.16;
+            var total = subtotal + importe;
+
+            document.getElementById('subtotal').innerText = subtotal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+            document.getElementById('importe').innerText = importe.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+            document.getElementById('total').innerText = total.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+        }
+
+        var cantidadDisponible = @cantidadDisponible;
+
+        function checkOtherOption(select) {
+            var otraCantidadDiv = document.getElementById('otraCantidad');
+            if (select.value === 'other') {
+                otraCantidadDiv.style.display = 'block';
+            } else {
+                otraCantidadDiv.style.display = 'none';
+                actualizarTotales();
+            }
+        }
+
+        function agregar(idProducto, costoUnitario) {
+            var cantidadSelect = document.getElementById('cantidad_' + idProducto);
+            var cantidad;
+            if (cantidadSelect.value === 'other') {
+                cantidad = document.getElementById('otra').value;
+            } else {
+                cantidad = cantidadSelect.value;
+            }
+
+            if (cantidad > 0) {
+                if (cantidadDisponible >= cantidad) {
+                    var confirmacion = confirm("¿Comprar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        window.parent.postMessage({ action: 'productoAgregado' }, '*');
+                        window.location.href = '@Url.Action("AgregarAlCarrito", "Home")?id=' + idProducto + '&cantidad=' + cantidad;
+                    }
+                } else {
+                    cantidad = cantidadDisponible;
+                    var confirmacion = confirm("Existencias insuficientes, ¿Comprar " + cantidad + " " + '@Model.Nombre_Producto' + "?");
+                    if (confirmacion) {
+                        window.parent.postMessage({ action: 'productoAgregado' }, '*');
+                        window.location.href = '@Url.Action("AgregarAlCarrito", "Home")?id=' + idProducto + '&cantidad=' + cantidad;
+                    }
+                }
+            } else {
+                alert("La cantidad seleccionada debe ser mayor que 0.");
+            }
+        }
+
+        function salir() {
+            window.parent.postMessage({ action: 'productoAgregado' }, '*');
+        }
+
+        document.addEventListener('DOMContentLoaded', actualizarTotales);
+
+        // Escuchar cambios en el campo "Otra Cantidad"
+        document.getElementById('otra').oninput = function () {
+            actualizarTotales();
+        };
+
+        // Escuchar cambios en el select de cantidad
+        document.getElementById('cantidad_@Model.ID_Producto').onchange = function () {
+            checkOtherOption(this);
+        };
+
+    </script>
+</body>
+</html>

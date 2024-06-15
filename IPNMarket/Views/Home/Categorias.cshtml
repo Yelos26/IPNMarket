@@ -1,0 +1,474 @@
+﻿@model IEnumerable<IPNMarket.Models.ProductosModel>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Título Aquí</title>
+
+    <!-- BODY -->
+    <style>
+
+        .body {
+            background: rgb(27, 18, 18);
+        }
+    </style>
+
+    <!-- Area de los productos -->
+
+    <style>
+        .area-productos {
+            background: rgba(52, 52, 52, 0.3);
+            margin-left: -20px; /* Margen negativo a la izquierda */
+            margin-right: -20px; /* Margen negativo a la derecha */
+        }
+
+        /* Area de cada fila de productos */
+        .productos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: 20px; /* Añade un margen de 10px a la izquierda para compensar el margen negativo */
+            margin-right: 20px;
+        }
+
+        /* Producto individual */
+        .producto {
+            /* text-align: center; */
+            width: 30%; /* Cada producto ocupa un máximo de 30% del ancho del contenedor padre */
+            margin-bottom: 20px; /* Espacio entre productos */
+            padding: 20px;
+            background-color: lightgray;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            height: 350px;
+            border-radius: 10px;
+        }
+
+            /* Imágenes en cada producto */
+            .producto img {
+                width: auto;
+                height: 180px;
+                display: block;
+                margin: 0 auto 10px;
+                border-radius: 20px;
+            }
+
+        /* h2 {
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        } */
+    </style>
+
+    <style>
+        /* Estilos para el menú lateral */
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px; 
+            height: 100%; 
+            background-color: rgb(20, 10, 10, 0.3);
+            padding-top: 20px; 
+        }
+
+            .menu-lateral button {
+                display: block;
+                padding: 15px;
+                text-decoration: none;
+                color: #fff;
+                transition: background-color 0.3s;
+                font-family: Arial, sans-serif; /* Cambia la fuente */
+                font-size: 15px; /* Cambia el tamaño del texto */
+            }
+
+                .menu-lateral button:hover {
+                    background-color: #555;
+                    color: white;
+                }
+
+        /* Estilos para el área de contenido principal */
+        .area-contenido {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        /* Estilos para los elementos de menú */
+        .menu-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 80%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid transparent;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                color: #8B0000;
+            }
+
+
+        /* Estilos para el iframe y el contenedor del iframe */
+        .iframe-container {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2010;
+        }
+
+            .iframe-container iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        /* Area del Buscador */
+        .Buscador-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+        /* Buscador */
+        .Buscador {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+        /* Contenedor del Icono-Buscador */
+        .Buscador-icon-container {
+            background-color: #fff;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            width: 40px; /* Tamaño fijo */
+            height: 40px; /* Tamaño fijo */
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+            .Buscador-icon-container:hover,
+            .Buscador-icon-container:focus {
+                border-color: rgba(234, 226, 183, 0.4);
+                box-shadow: 0 0 0 4px rgb(234 226 183 / 10%);
+            }
+        /* Icono-Buscador */
+        .Buscador-icon {
+            fill: #000;
+            width: 1.5rem; /* Tamaño del ícono */
+            height: 1.5rem; /* Tamaño del ícono */
+        }
+        /* Area para Buscar */
+        .Buscador-input {
+            flex-grow: 1; /* El campo de búsqueda ocupa todo el espacio restante */
+            min-width: 400px; /* Ancho mínimo del campo de búsqueda */
+            height: 40px;
+            line-height: 28px;
+            padding: 0 1rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            outline: none;
+            background-color: #f3f3f4;
+            color: #0d0c22;
+            transition: 0.3s ease;
+        }
+            /* Placeholder color */
+            .Buscador-input::placeholder {
+                color: #9e9ea7;
+            }
+            /* Focus and hover states */
+            .Buscador-input:focus,
+            .Buscador-input:hover {
+                outline: none;
+                border-color: rgba(234, 226, 183, 0.4);
+                background-color: #fff;
+                box-shadow: 0 0 0 4px rgb(234 226 183 / 10%);
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+<body class="body">
+
+    <!-- Menú lateral -->
+    <div class="menu-lateral">
+        <center>
+
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <button class="btn" onclick="REGRESAR()">Regresar</button>
+
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <button class="btn" onclick="Catego0()">TODO</button>
+
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <p style="color: white"><strong>SECCIONES</strong></p>
+
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <button class="btn" onclick="Catego1()">ACADEMICA</button>
+            <button class="btn" onclick="Catego3()">DEPORTIVA</button>
+            <button class="btn" onclick="Catego2()">MEDICA</button>
+            <button class="btn" onclick="Catego4()">OTROS...</button>
+        </center>
+    </div>
+
+    <script>
+        function REGRESAR() {
+            window.location.href = '@Url.Action("Home", "Home")';
+        }
+
+        function Catego0() {
+            var idProducto = 0;
+            window.location.href = '@Url.Action("Categorias", "Home")?id=' + idProducto;
+        }
+
+        function Catego1() {
+            var idProducto = 1;
+            window.location.href = '@Url.Action("Categorias", "Home")?id=' + idProducto;
+        }
+
+        function Catego2() {
+            var idProducto = 2;
+            window.location.href = '@Url.Action("Categorias", "Home")?id=' + idProducto;
+        }
+
+        function Catego3() {
+            var idProducto = 3;
+            window.location.href = '@Url.Action("Categorias", "Home")?id=' + idProducto;
+        }
+
+        function Catego4() {
+            var idProducto = 4;
+            window.location.href = '@Url.Action("Categorias", "Home")?id=' + idProducto;
+        }
+    </script>
+
+    <div class="area-contenido">
+
+        <div class="Buscador-container">
+            <div class="Buscador">
+                <input class="Buscador-input" type="search" placeholder="Buscar..." id="buscador-input" onkeyup="buscar(event)" value="@ViewBag.nomb" />
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="area-productos">
+            <br />
+
+            @if (!Model.Any())
+            {
+                <div style="text-align: center; color: white; font-weight: bold; font-size: large;">
+                    No hay elementos para mostrar
+                </div>
+            }
+            else
+            {
+                <div class="productos" id="productos-container">
+                    @foreach (var producto in Model)
+                    {
+                        <div class="producto" onclick="showIframe('@producto.ID_Producto')" style="display: none;">
+                            @{
+                                string imageData = "";
+                                if (producto.Imagen != null && producto.Imagen.Length > 0)
+                                {
+                                    string base64 = Convert.ToBase64String(producto.Imagen);
+                                    string extension = "jpg"; // Extensión predeterminada
+
+                                    // Determinar la extensión de la imagen
+                                    if (producto.Imagen.Take(4).SequenceEqual(new byte[] { 137, 80, 78, 71 }))
+                                    {
+                                        extension = "png";
+                                    }
+                                    else if (producto.Imagen.Take(2).SequenceEqual(new byte[] { 255, 216 }))
+                                    {
+                                        extension = "jpeg";
+                                    }
+
+                                    // Crear el esquema data URI
+                                    imageData = $"data:image/{extension};base64,{base64}";
+                                }
+                            }
+                            <center>
+                                <h2>@producto.Nombre_Producto</h2>
+                                @if (!string.IsNullOrEmpty(imageData))
+                                {
+                                    <img src="@imageData" alt="@producto.Nombre_Producto" width="60" height="60">
+                                }
+                                else
+                                {
+                                    <strong>Imagen no disponible</strong>
+                                }
+                                <p>@producto.Descripción</p>
+                            </center>
+                            @if (ViewData["Nomb"] != null)
+                            {
+                                <div class="contenedor"></div>
+                                <!-- CONTENEDOR DEL IFRAME -->
+                                <div class="iframe-container" id="iframeContainer">
+                                    <iframe id="iframe"></iframe>
+                                </div>
+                                <script>
+                                    window.addEventListener('message', function (event) {
+                                        if (event.data.action === 'productoAgregado') {
+                                            document.body.style.overflow = 'visible';
+                                            document.getElementById('iframeContainer').style.display = 'none';
+                                        }
+                                    });
+
+                                    function showIframe(idProducto) {
+                                        document.getElementById('iframeContainer').style.display = 'flex';
+                                        document.body.style.overflow = 'hidden';
+                                        document.getElementById('iframe').src = "/Home/VerProducto?ID_Producto=" + idProducto;
+                                    }
+
+                                    function hideIframe() {
+                                        document.getElementById('iframeContainer').style.display = 'none';
+                                        document.body.style.overflow = 'visible';
+                                        document.getElementById('iframe').src = "/Home/VerProducto?ID_Producto=null";
+                                    }
+                                </script>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div id="load-more-container" style="text-align: center; margin-top: 20px;">
+                    <center><button class="btn" id="load-more-btn" onclick="loadMoreProductos()">Cargar más</button></center>
+                </div>
+            }
+        </div>
+
+        <!-- iframe donde se cargará la segunda vista -->
+        <iframe id="frameCentro" name="centro" style="width: 100%; height: 500px; border: none;"></iframe>
+    </div>
+
+    <script>
+        //Atras adelante
+        let currentIndex = 0;
+        const productsPerPage = 21;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadMoreProductos();
+        });
+
+        function loadMoreProductos() {
+            const productos = document.querySelectorAll('.producto');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+
+            for (let i = currentIndex; i < currentIndex + productsPerPage; i++) {
+                if (productos[i]) {
+                    productos[i].style.display = '';
+                }
+            }
+
+            currentIndex += productsPerPage;
+
+            // Realizar la búsqueda después de cargar más productos
+            realizarBusqueda();
+
+            if (currentIndex >= productos.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        // Buscador
+        document.addEventListener('DOMContentLoaded', function () {
+            const buscadorInput = document.querySelector('.Buscador-input');
+
+            // Función para realizar la búsqueda
+            function realizarBusqueda() {
+                const searchTerm = buscadorInput.value.trim().toLowerCase();
+                const productos = document.querySelectorAll('.producto');
+
+                productos.forEach(producto => {
+                    let productoVisible = false;
+
+                    if (searchTerm === '') {
+                        productoVisible = true; // Mostrar todos los productos si el término de búsqueda está vacío
+                    } else {
+                        const nombreProducto = producto.querySelector('h2').innerText.trim().toLowerCase();
+                        const descripcionProducto = producto.querySelector('p').innerText.trim().toLowerCase();
+
+                        if (nombreProducto.includes(searchTerm) || descripcionProducto.includes(searchTerm)) {
+                            productoVisible = true;
+                        }
+                    }
+
+                    if (productoVisible) {
+                        producto.style.display = '';
+                    } else {
+                        producto.style.display = 'none';
+                    }
+                });
+            }
+
+            // Llama a realizarBusqueda() una vez que se carga la página
+            realizarBusqueda();
+
+            // Agrega el evento keyup para realizar la búsqueda dinámica
+            buscadorInput.addEventListener('keyup', function () {
+                realizarBusqueda();
+            });
+        });
+    </script>
+
+    
+    </body>
+
+</html>
+
+
+

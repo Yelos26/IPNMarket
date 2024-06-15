@@ -1,0 +1,776 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Consultas";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(27, 18, 18);
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgb(20, 10, 10, 0.3);
+            padding-top: 20px;
+        }
+
+            .sidebar button {
+                display: block;
+                padding: 15px;
+                text-decoration: none;
+                color: #fff;
+                transition: background-color 0.3s;
+                font-family: Arial, sans-serif; /* Cambia la fuente */
+                font-size: 15px; /* Cambia el tamaño del texto */
+            }
+
+            .sidebar button:hover {
+                    background-color: #555;
+                    color: white;
+                }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .btn-container{
+                margin: 10px;
+                padding: 15px 30px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                transition: background-color 0.3s;
+            }
+
+                .btn-container{
+                    background-color: #0056b3;
+                }
+
+        h2 {
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .table th, .table td {
+                padding: 10px;
+                border: 1px solid #8B0000;
+                text-align: center; /* Centrar el texto en las celdas */
+                margin: 0 auto;
+            }
+
+            .table th {
+                background-color: #8B0000;
+                color: #fff;
+            }
+
+            .table tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .table tr:hover {
+                background-color: #ddd;
+            }
+
+            img {
+                height: 60px; /* Fijar la altura a 60px */
+                width: auto; /* Ancho automático */
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                margin: 0 auto;
+            }
+
+        /* Area del Buscador */
+        .Buscador-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+        /* Buscador */
+        .Buscador {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+        /* Contenedor del Icono-Buscador */
+        .Buscador-icon-container {
+            background-color: #fff;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            width: 40px; /* Tamaño fijo */
+            height: 40px; /* Tamaño fijo */
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+            .Buscador-icon-container:hover,
+            .Buscador-icon-container:focus {
+                border-color: rgba(234, 226, 183, 0.4);
+                box-shadow: 0 0 0 4px rgb(234 226 183 / 10%);
+            }
+        /* Icono-Buscador */
+        .Buscador-icon {
+            fill: #000;
+            width: 1.5rem; /* Tamaño del ícono */
+            height: 1.5rem; /* Tamaño del ícono */
+        }
+        /* Area para Buscar */
+        .Buscador-input {
+            flex-grow: 1; /* El campo de búsqueda ocupa todo el espacio restante */
+            min-width: 400px; /* Ancho mínimo del campo de búsqueda */
+            height: 40px;
+            line-height: 28px;
+            padding: 0 1rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            outline: none;
+            background-color: #f3f3f4;
+            color: #0d0c22;
+            transition: 0.3s ease;
+        }
+            /* Placeholder color */
+            .Buscador-input::placeholder {
+                color: #9e9ea7;
+            }
+            /* Focus and hover states */
+            .Buscador-input:focus,
+            .Buscador-input:hover {
+                outline: none;
+                border-color: rgba(234, 226, 183, 0.4);
+                background-color: #fff;
+                box-shadow: 0 0 0 4px rgb(234 226 183 / 10%);
+            }
+
+        /* Estilos para el iframe y el contenedor del iframe */
+        .iframe-container {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2010;
+        }
+
+            .iframe-container iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 80%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid transparent;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+
+        <center>
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <button class="btn" onclick="Regresar()">Regresar</button>
+        
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <p style="color: white"><strong>CONSULTAS</strong></p>
+
+            <hr style="border: none; height: 8px; background-color: rgb(20, 10, 10, 0.5);">
+
+            <button class="btn" onclick="Consulta1()">Escuelas</button>
+            <button class="btn" onclick="Consulta2()">Secciones</button>
+            <button class="btn" onclick="Consulta3()">Catálogo</button>
+            <button class="btn" onclick="Consulta4()">Usuarios</button>
+            <button class="btn" onclick="Consulta5()">Productos</button>
+            <button class="btn" onclick="Consulta6()">Almacén</button>
+            <button class="btn" onclick="Consulta7()">Pedidos</button>
+            <button class="btn" onclick="Consulta8()">Ventas</button>
+        </center>
+        
+    </div>
+
+    <div class="content">
+        
+        @if (ViewBag.ID != 0)
+        {
+            <div class="Buscador-container">
+                <div class="Buscador">
+                    <input class="Buscador-input" type="search" placeholder="Buscar..." id="buscador-input" onkeyup="buscar(event)" />
+                </div>
+            </div>
+        }
+
+        <br />
+
+        @if (ViewBag.ID == 0)
+        {
+            <center><p style="color: white">SELECCIONA UNA OPCIÓN PARA CONSULTAR</p></center>
+        }
+        else if (ViewBag.ID == 1)
+        {
+            <h2> Escuelas </h2>
+
+            var escuelas = ViewData.Model as List<EscuelaModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Escuela</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var escuela in escuelas)
+                    {
+                        <tr>
+                            <td>@escuela.ID_Escuela</td>
+                            <td>@escuela.Nombre</td>
+                            <td>@escuela.Dirección</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 2)
+        {
+            <h2> Secciones </h2>
+
+            var secciones = ViewData.Model as List<SeccionesModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Sección</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var seccion in secciones)
+                    {
+                        <tr>
+                            <td>@seccion.ID_Secciones</td>
+                            <td>@seccion.Nombre</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 3)
+        {
+            <h2> Catálogo </h2>
+
+            var perfiles = ViewData.Model as List<CAT_PERFILModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Perfil</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var perfil in perfiles)
+                    {
+                        <tr>
+                            <td>@perfil.ID_PERFIL</td>
+                            <td>@perfil.DESCRIPCIÓN</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 4)
+        {
+            <h2> Usuarios </h2>
+
+            var usuarios = ViewData.Model as List<UsuarioModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre de Usuario</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha de Registro</th>
+                        <th>Dirección</th>
+                        <th>Imagen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in usuarios)
+                    {
+                        <tr>
+                            <td>@usuario.Nombre_Usuario</td>
+                            <td>@usuario.Ap_Paterno</td>
+                            <td>@usuario.Ap_Materno</td>
+                            <td>@usuario.Correo</td>
+                            <td>@usuario.Fecha_Reg.ToShortDateString()</td>
+                            <td>@usuario.Direccion</td>
+                            <td>
+                                @{
+                                    string imageData = "";
+                                    if (usuario.Imagen != null && usuario.Imagen.Length > 0)
+                                    {
+                                        string base64 = Convert.ToBase64String(usuario.Imagen);
+                                        string extension = "jpg"; // Extensión predeterminada
+
+                                        // Determinar la extensión de la imagen
+                                        if (usuario.Imagen.Take(4).SequenceEqual(new byte[] { 137, 80, 78, 71 }))
+                                        {
+                                            extension = "png";
+                                        }
+                                        else if (usuario.Imagen.Take(2).SequenceEqual(new byte[] { 255, 216 }))
+                                        {
+                                            extension = "jpeg";
+                                        }
+
+                                        // Crear el esquema data URI
+                                        imageData = $"data:image/{extension};base64,{base64}";
+                                    }
+                                }
+                                @if (!string.IsNullOrEmpty(imageData))
+                                {
+                                    <img src="@imageData" alt="Imagen de usuario">
+                                }
+                                else
+                                {
+                                    <span>No disponible</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 5)
+        {
+            <h2> Productos </h2>
+
+            var productos = ViewData.Model as List<ProductosModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Producto</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Tamaño</th>
+                        <th>Costo Unitario</th>
+                        <th>Sección</th>
+                        <th>Fecha de Registro</th>
+                        <th>Fecha de Caducidad</th>
+                        <th>Escuela</th>
+                        <th>Imagen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var producto in productos)
+                    {
+                        <tr>
+                            <td>@producto.ID_Producto</td>
+                            <td>@producto.Nombre_Producto</td>
+                            <td>@producto.Descripción</td>
+                            <td>@producto.Tamaño</td>
+                            <td>@producto.Costo_Unitario</td>
+                            <td>@producto.Nombre_Seccion</td>
+                            <td>@producto.Fecha_Reg.ToShortDateString()</td>
+                            <td>@producto.Fecha_Cad.ToShortDateString()</td>
+                            <td>@producto.Nombre</td>
+                            <td>
+                                @{
+                                    string imageData = "";
+                                    if (producto.Imagen != null && producto.Imagen.Length > 0)
+                                    {
+                                        string base64 = Convert.ToBase64String(producto.Imagen);
+                                        string extension = "jpg"; // Extensión predeterminada
+
+                                        // Determinar la extensión de la imagen
+                                        if (producto.Imagen.Take(4).SequenceEqual(new byte[] { 137, 80, 78, 71 }))
+                                        {
+                                            extension = "png";
+                                        }
+                                        else if (producto.Imagen.Take(2).SequenceEqual(new byte[] { 255, 216 }))
+                                        {
+                                            extension = "jpeg";
+                                        }
+
+                                        // Crear el esquema data URI
+                                        imageData = $"data:image/{extension};base64,{base64}";
+                                    }
+                                }
+                                @if (!string.IsNullOrEmpty(imageData))
+                                {
+                                    <img src="@imageData" alt="Imagen de producto" width="60" height="60">
+                                }
+                                else
+                                {
+                                    <span>No disponible</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 6)
+        {
+            <h2> Almacén </h2>
+
+            var almacen = ViewData.Model as List<AlmacenModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Almacén</th>
+                        <th>Cantidad</th>
+                        <th>Precio Total</th>
+                        <th># Producto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in almacen)
+                    {
+                        <tr>
+                            <td>@item.ID_Almacen</td>
+                            <td>@item.Cantidad</td>
+                            <td>@item.Precio_Total</td>
+                            <td>
+                                <div class="producto" onclick="showIframe('@item.ID_Producto')">
+                                    @item.ID_Producto
+                                    <div class="iframe-container" id="iframeContainer"><iframe id="iframe"></iframe></div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            
+       
+        }
+        else if (ViewBag.ID == 7)
+        {
+            <h2> Pedidos </h2>
+
+            var pedidos = ViewData.Model as List<PedidoModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Pedido</th>
+                        <th>Cantidad</th>
+                        <th>Costo Total</th>
+                        <th>Fecha Pedido</th>
+                        <th># Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pedido in pedidos)
+                    {
+                        <tr>
+                            <td>@pedido.ID_Pedido</td>
+                            <td>@pedido.Cantidad</td>
+                            <td>@pedido.Costo_Total</td>
+                            <td>@pedido.Fecha_Pedido.ToShortDateString()</td>
+                            <td>
+                                <div class="producto" onclick="showIframe2('@pedido.ID_Usuario', '@pedido.ID_Pedido')">
+                                    @pedido.ID_Usuario
+                                    <div class="iframe-container" id="iframeContainer_@pedido.ID_Pedido" style="display: none;">
+                                        <iframe id="iframe_@pedido.ID_Pedido"></iframe>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (ViewBag.ID == 8)
+        {
+            <h2> Ventas </h2>
+
+            var ventas = ViewData.Model as List<VentasModel>;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># Ventas</th>
+                        <th># Usuario</th>
+                        <th># Pedido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var venta in ventas)
+                    {
+                        <tr>
+                            <td>@venta.ID_Ventas</td>
+                            <td>
+                                <div class="producto" onclick="showIframe2('@venta.ID_Usuario', '@venta.ID_Ventas')">
+                                    @venta.ID_Usuario
+                                    <div class="iframe-container" id="iframeContainer_@venta.ID_Ventas" style="display: none;">
+                                        <iframe id="iframe_@venta.ID_Ventas"></iframe>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="producto" onclick="showIframe3('@venta.ID_Pedido', '@venta.ID_Ventas')">
+                                    @venta.ID_Pedido
+                                    <div class="iframe-container" id="iframeContainer_@venta.ID_Ventas" style="display: none;">
+                                        <iframe id="iframe_@venta.ID_Ventas"></iframe>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+    <iframe id="frameCentro" name="centro" style="width: 100%; height: 500px; border: none;"></iframe>
+
+    @* <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var buscadorInput = document.getElementById("buscadorInput");
+
+            buscadorInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    var term = buscadorInput.value;
+                    var idConsulta = 9; // Cambia este valor al ID correspondiente de tu búsqueda por término
+                    window.location.href = '@Url.Action("Buscar", "Usuario")?id=' + idConsulta + '&term=' + term;
+                }
+            });
+        });
+    </script> *@
+
+    <!-- Iframe Almacen -->
+    <script>
+        window.addEventListener('message', function (event) {
+            // Verifica si el mensaje recibido indica que se ha agregado el producto al carrito
+            if (event.data.action === 'productoAgregado') {
+                document.body.style.overflow = 'visible';
+                // Cierra el iframe
+                document.getElementById('iframeContainer').style.display = 'none';
+            }
+        });
+
+        function showIframe(idProducto) {
+            document.getElementById('iframeContainer').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('iframe').src = "/Home/VerProducto?ID_Producto=" + idProducto;
+        }
+
+        function hideIframe() {
+            document.getElementById('iframeContainer').style.display = 'none';
+            document.body.style.overflow = 'visible';
+            document.getElementById('iframe').src = "/Home/VerProducto?ID_Producto=null";
+        }
+    </script>
+
+    <!-- Iframe Ventas -->
+    <script>
+        window.addEventListener('message', function (event) {
+            if (event.data.action === 'productoAgregado') {
+                document.body.style.overflow = 'visible';
+                document.querySelectorAll('.iframe-container').forEach(function (container) {
+                    container.style.display = 'none';
+                });
+            }
+        });
+
+        function showIframe2(idUsuario, idVenta) {
+            document.querySelectorAll('.iframe-container').forEach(function (container) {
+                container.style.display = 'none';
+            });
+            document.body.style.overflow = 'hidden';
+            var iframeContainer = document.getElementById('iframeContainer_' + idVenta);
+            iframeContainer.style.display = 'flex';
+            var iframe = document.getElementById('iframe_' + idVenta);
+            iframe.src = "/Usuario/VerUsuario?ID_Usuario=" + idUsuario;
+        }
+
+        function hideIframe2(idVenta) {
+            var iframeContainer = document.getElementById('iframeContainer_' + idVenta);
+            iframeContainer.style.display = 'none';
+            document.body.style.overflow = 'visible';
+            var iframe = document.getElementById('iframe_' + idVenta);
+            iframe.src = "/Usuario/VerUsuario?ID_Usuario=null";
+        }
+    </script>
+
+    <!-- Iframe Ventas -->
+    <script>
+        window.addEventListener('message', function (event) {
+            if (event.data.action === 'productoAgregado') {
+                document.body.style.overflow = 'visible';
+                document.querySelectorAll('.iframe-container').forEach(function (container) {
+                    container.style.display = 'none';
+                });
+            }
+        });
+
+        function showIframe3(idPedido, idVenta) {
+            document.querySelectorAll('.iframe-container').forEach(function (container) {
+                container.style.display = 'none';
+            });
+            document.body.style.overflow = 'hidden';
+            var iframeContainer = document.getElementById('iframeContainer_' + idVenta);
+            iframeContainer.style.display = 'flex';
+            var iframe = document.getElementById('iframe_' + idVenta);
+            iframe.src = "/Usuario/VerPedido?ID_Pedido=" + idPedido;
+        }
+
+        function hideIframe3(idVenta) {
+            var iframeContainer = document.getElementById('iframeContainer_' + idVenta);
+            iframeContainer.style.display = 'none';
+            document.body.style.overflow = 'visible';
+            var iframe = document.getElementById('iframe_' + idVenta);
+            iframe.src = "/Usuario/VerPedido?ID_Pedido=null";
+        }
+    </script>
+
+    <script>
+        function Regresar() {
+            window.location.href = '@Url.Action("Home", "Home")';
+        }
+
+        function Consulta1() {
+            var idConsulta = 1;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta2() {
+            var idConsulta = 2;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta3() {
+            var idConsulta = 3;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta4() {
+            var idConsulta = 4;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta5() {
+            var idConsulta = 5;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta6() {
+            var idConsulta = 6;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta7() {
+            var idConsulta = 7;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        function Consulta8() {
+            var idConsulta = 8;
+            window.location.href = '@Url.Action("Consultar", "Usuario")?id=' + idConsulta;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const buscadorInput = document.querySelector('.Buscador-input');
+
+            buscadorInput.addEventListener('keyup', function () { // Eliminar la condición de Enter
+                const searchTerm = buscadorInput.value.trim().toLowerCase();
+                const rows = document.querySelectorAll('.table tbody tr');
+
+                rows.forEach(row => {
+                    let rowVisible = false;
+
+                    if (searchTerm === '') {
+                        rowVisible = true; // Mostrar todas las filas si el término de búsqueda está vacío
+                    } else {
+                        row.querySelectorAll('td').forEach(cell => {
+                            const cellText = cell.innerText.trim().toLowerCase();
+                            if (cellText.includes(searchTerm)) { // Cambiar a includes para buscar coincidencias parciales
+                                rowVisible = true;
+                            }
+                        });
+                    }
+
+                    if (rowVisible) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

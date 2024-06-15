@@ -1,0 +1,119 @@
+﻿@model UsuarioModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-details {
+            margin-top: 20px;
+        }
+
+            .product-details img {
+                display: block;
+                margin: 0 auto;
+                width: auto;
+                height: 300px;
+                border-radius: 10px;
+            }
+
+            .product-details p {
+                margin: 10px 0;
+                color: #666;
+            }
+
+            .product-details label {
+                display: block;
+                margin: 10px 0 5px;
+                font-weight: bold;
+            }
+
+            .product-details select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+        .agregar-carrito {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .agregar-carrito:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Detalles del Usuario</h2>
+        <div class="product-details">
+            <h3>@Model.Nombre_Usuario</h3>
+            <p><strong>Apellido Paterno:</strong> @Model.Ap_Paterno</p>
+            <p><strong>Apellido Materno:</strong> @Model.Ap_Materno</p>
+            <p><strong>Correo:</strong> @Model.Correo</p>
+            <p><strong>Fecha de Registro:</strong> @Model.Fecha_Reg.ToString("dd/MM/yyyy")</p>
+            <p><strong>Direccion:</strong> @Model.Direccion</p>
+            
+            @if (Model.Imagen != null)
+            {
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.Imagen)" alt="Imagen del Producto">
+            }
+            else
+            {
+                <p>Imagen no disponible</p>
+            }
+
+            <br />
+
+            <button class="agregar-carrito" onclick="regresar()">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+        function regresar() {
+            window.parent.postMessage({ action: 'productoAgregado' }, '*');
+        }
+    </script>
+</body>
+</html>

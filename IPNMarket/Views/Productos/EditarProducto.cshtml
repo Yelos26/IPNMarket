@@ -1,0 +1,208 @@
+﻿@model IPNMarket.Models.ProductosModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPNMarket - Tu tienda virtual</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            background-color: rgb(27, 18, 18);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Aumenta el espacio entre los elementos del formulario */
+            background-color: rgb(52, 52, 52, 0.95);
+            padding: 30px;
+            width: 100%; /* Haz que el formulario ocupe todo el ancho disponible */
+            max-width: 500px; /* Establece un ancho máximo para el formulario */
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave al formulario */
+            margin: auto; /* Centra el formulario horizontalmente en la página */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        h2 {
+            color: white;
+            font-size: 32px; /* Ajusta el tamaño del título */
+            margin-bottom: 30px; /* Aumenta el espacio debajo del título */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: #8B0000;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+            .btn:hover {
+                border: 1px solid #8B0000;
+                background-color: #8B0000;
+                color: white;
+            }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+            .flex-row > div > label {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+            }
+        label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form id="formEditarProducto" method="post" action="@Url.Action("ActualizarProducto", "Productos")">
+
+            <center><h2>EDITAR PRODUCTO</h2></center>
+
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="Nombre_Producto" value="@Model.Nombre_Producto" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32" minlength="1" maxlength="50" required />
+            </div>
+            <div>
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="Descripción" value="@Model.Descripción" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32" minlength="1" maxlength="200" required />
+            </div>
+            <div>
+                <label for="tamaño">Tamaño:</label>
+                <input type="text" id="tamaño" name="Tamaño" value="@Model.Tamaño" placeholder="#x#cm, G, M, CH" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="50" required />
+            </div>
+            <div>
+                <label for="costo">Costo:</label>
+                <input type="text" id="costo" name="Costo_Unitario" value="@Model.Costo_Unitario" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="5" required />
+            </div>
+
+            @if (Model.Fecha_Cad != null)
+            {
+                <div>
+                    <label for="fecha_caducidad">Fecha de Caducidad/Salida:</label>
+                    <input type="date" id="fecha_caducidad" name="Fecha_Cad" value="@Model.Fecha_Cad.ToString("yyyy-MM-dd")" required />
+                </div>
+            }
+
+            <div>
+                <label for="cantidad">Cantidad:</label>
+                <input type="text" id="cantidad" name="cantidad" value="@ViewBag.Almacen.Cantidad" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="1" maxlength="10" required />
+            </div>
+
+            <div>
+                <label for="secciones">Sección:</label>
+                <select id="secciones" name="ID_Secciones" required>
+                    <option value="4" selected="@((Model.ID_Secciones == 4) ? "selected" : null)">Otros...</option>
+                    <option value="1" selected="@((Model.ID_Secciones == 1) ? "selected" : null)">Academica</option>
+                    <option value="2" selected="@((Model.ID_Secciones == 2) ? "selected" : null)">Salud</option>
+                    <option value="3" selected="@((Model.ID_Secciones == 3) ? "selected" : null)">Deportes</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="escuelas">Escuela:</label>
+                <select id="escuelas" name="ID_Escuela" required>
+                    @* <option value="@Model.ID_Secciones" selected>@Model.Nombre</option> *@
+                    @for (int i = 0; i < ViewBag.ID_Escuelas.Count; i++)
+                    {
+                        var selected = (Model.ID_Escuela == ViewBag.ID_Escuelas[i]) ? "selected" : null;
+                        <option value="@ViewBag.ID_Escuelas[i]" selected="@selected">@ViewBag.NombresEscuelas[i]</option>
+                    }
+                </select>
+            </div>
+
+            <div class="flex-row">
+                <button class="btn btn-primary" type="button" onclick="window.location.href='@Url.Action("Productos", "Productos")'">Regresar</button>
+                <button class="btn btn-primary" type="submit" asp-action="ModificarImagen" asp-controller="Productos">IMAGEN</button>
+                <button class="btn btn-primary" type="button" onclick="confirmarActualizar()">Actualizar</button>
+            </div>
+
+        </form>
+    </div>
+
+    @if (Model.Fecha_Cad != null)
+    {
+        <script>
+            function confirmarActualizar() {
+                var fechaCaducidad = new Date(document.getElementById('fecha_caducidad').value);
+                var fechaHoy = new Date();
+                fechaHoy.setHours(0, 0, 0, 0);
+
+                if (fechaCaducidad <= fechaHoy) {
+                    alert("El producto no puede caducar el mismo día o antes de que se ingrese");
+                } else {
+                    var confirmacion = confirm("¿Deseas actualizar el producto?");
+                    if (confirmacion) {
+                        document.getElementById("formEditarProducto").submit();
+                    }
+                }
+            }
+        </script>
+    }
+
+</body>
+</html>
